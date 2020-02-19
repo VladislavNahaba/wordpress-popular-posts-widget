@@ -35,20 +35,20 @@ class Popular_Posts_Init {
 			'type' => 'select',
 			'title' => 'Сортировка',
 			'choices' => array(
-				'asc' => 'asc',
-				'desc' => 'desc',
+				'date' => 'Date',
+				'id' => 'ID',
+				'random' => 'Random'
 			),
-			'default' => 'date'
+			'default' => 'random'
 		),
 		'sort_order' => array(
 			'type' => 'select',
 			'title' => 'Порядок сортировки',
 			'choices' => array(
-				'date' => 'Date',
-				'id' => 'ID',
-				'random' => 'Random'
+				'asc' => 'ASC',
+				'desc' => 'DESC',
 			),
-			'default' => 'asc'
+			'default' => 'desc'
 		),
 		'images' => array(
 			'type' => 'checkbox',
