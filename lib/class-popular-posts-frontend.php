@@ -69,7 +69,6 @@ class Popular_Posts_Frontend {
 			'more_text'   => 'read more...',
 			'ignore_more' => false,
 		), $args );
-		$rg = apply_filters( 'popular_excerpt', $rg );
 		if( ! $rg->text ) {
 			$rg->text = $post->post_excerpt ?: $post->post_content;
 		}
@@ -95,7 +94,6 @@ class Popular_Posts_Frontend {
 				$text
 			);
 		}
-		$text = apply_filters( 'kama_excerpt', $text, $rg );
 		if( isset($text_append) ) {
 			$text .= $text_append;
 		}

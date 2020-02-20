@@ -8,7 +8,6 @@ if( is_admin() ) {
 				$output = str_replace( "value=\"{$value}\"", "value=\"{$value}\" selected", $output );
 			}
 		}
-
 		return $output;
 	}
 }
