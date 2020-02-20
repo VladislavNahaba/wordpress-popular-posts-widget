@@ -50,14 +50,14 @@ class Popular_Posts_Init {
 			),
 			'default' => 'post'
 		),
-//		'exclude_post' => array(
-//			'type' => 'post',
-//			'title' => 'Исключаемые посты',
-//			'default' => ''
-//		),
+		'exclude_post' => array(
+			'type' => 'post',
+			'title' => 'Исключаемые посты',
+			'default' => ''
+		),
 		'include_categories' => array(
 			'type' => 'category',
-			'title' => 'Включаемые категории',
+			'title' => 'Обязательные категории',
 			'default' => []
 		),
 		'exclude_categories' => array(
@@ -67,14 +67,19 @@ class Popular_Posts_Init {
 		),
 		'include_tags' => array(
 			'type' => 'tag',
-			'title' => 'Включаемые тэги',
+			'title' => 'Обязательные тэги',
 			'default' => []
 		),
 		'include_authors' => array(
 			'type' => 'author',
-			'title' => 'Включамые авторы',
+			'title' => 'Обязательные авторы',
 			'default' => []
 		),
+		'template' => array(
+			'type' => 'template',
+			'title' => 'Шаблон',
+			'default' => ''
+		)
 	);
 
 	public function get_options_params() {

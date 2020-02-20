@@ -29,11 +29,13 @@ define( 'POPLAR_VERSION', '1.0' );
 define( 'POPULAR_SLUG', 'popular-posts' );
 define( 'POPULAR_DIR', plugin_dir_path(__FILE__) );
 define( 'POPULAR_URL', plugin_dir_url(__FILE__) );
-require_once  __DIR__ . '/lib/dropdown_categories_multiple.php';
-require_once __DIR__ . '/lib/popularPostsWidget.php';
-new popularPostsWidget();
+require_once  POPULAR_DIR . 'lib/ajax-loading-posts.php';
+require_once  POPULAR_DIR . 'lib/register-popular-js.php';
+require_once  POPULAR_DIR . 'lib/dropdown-categories-multiple.php';
+require_once POPULAR_DIR . 'lib/class-popular-post-widget.php';
+new Popular_Post_Widget();
 
 function popular_posts_widget_register() {
-	register_widget( 'popularPostsWidget' );
+	register_widget( 'Popular_Post_Widget' );
 }
 add_action( 'widgets_init', 'popular_posts_widget_register' );
