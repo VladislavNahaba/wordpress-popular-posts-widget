@@ -11,6 +11,7 @@ jQuery(function( $ ) {
     $selector.find('.popular-posts-tag').select2();
     $selector.find('.popular-posts-author').select2();
     $selector.find('.popular-posts-template').select2();
+    $selector.find('.popular-posts-thumbnail').select2();
     $selector.find('.popular-posts-post').select2({
       ajax: {
         url: ajaxurl + '?action=popular_posts_widget',

@@ -148,6 +148,46 @@ class Popular_Posts_Components extends WP_Widget {
 		echo $select;
 	}
 
+	public function input_thumbnail( $id, $name, $value, $title ) {
+		$thumbnails = $this->list_thumbnail_sizes();
+		$select = $this->start_wrap();
+		$select .= '<label for="' . $id . '">' . $title . '</label>';
+		$select .= '<select class="widefat popular-posts-thumbnail" id="' . $id . '" name="' . $name . '">';
+		foreach ($thumbnails as $thumb) {
+			$select .= '<option value="' . $thumb['value'] . '"  ' . selected($value, $thumb['value'], false) . '>';
+			$select .= $thumb['label'];
+			$select .= '</option>';
+		}
+		$select .= '</select>';
+		$select .= $this->end_wrap();
+		echo $select;
+    }
+
+	private function list_thumbnail_sizes() {
+		global $_wp_additional_image_sizes;
+		$sizes = array();
+		$rSizes = array();
+		foreach (get_intermediate_image_sizes() as $s) {
+			$sizes[$s] = array(0, 0);
+			if (in_array($s, array('thumbnail', 'medium', 'large'))) {
+				$sizes[$s][0] = get_option($s . '_size_w');
+				$sizes[$s][1] = get_option($s . '_size_h');
+			} else {
+				if (isset($_wp_additional_image_sizes) && isset($_wp_additional_image_sizes[$s]))
+					$sizes[$s] = array($_wp_additional_image_sizes[$s]['width'], $_wp_additional_image_sizes[$s]['height'],);
+			}
+		}
+
+
+		foreach ($sizes as $size => $atts) {
+			array_push($rSizes, array(
+				'label' => $size . ' ' . implode('x', $atts),
+				'value' => $size
+			));
+		}
+		return $rSizes;
+	}
+
 	private function get_templates() {
 		$paths = array_filter(glob(POPULAR_DIR . 'templates/*'));
 		$templates = [];

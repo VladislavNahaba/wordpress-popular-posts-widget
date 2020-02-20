@@ -71,6 +71,9 @@ class Popular_Post_Widget extends Popular_Posts_Components {
 				case 'template':
 					$this->input_template($opt_id, $opt_name, $opt_value, $opt_title);
 					break;
+				case 'thumbnail':
+					$this->input_thumbnail($opt_id, $opt_name, $opt_value, $opt_title);
+					break;
 			}
 		}
 		echo '</div>';
@@ -92,6 +95,7 @@ class Popular_Post_Widget extends Popular_Posts_Components {
 	                break;
                 case 'select':
 				case 'template':
+				case 'thumbnail':
 	                $instance[$id] =  isset($new_instance[$id]) ? $new_instance[$id] : $old_instance[$id];
 	                break;
 				case 'tag':

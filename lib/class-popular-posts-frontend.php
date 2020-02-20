@@ -36,11 +36,12 @@ class Popular_Posts_Frontend {
 	public function get_template_data() {
 		$query = $this->get_query();
 		$result = [];
+		$thumbnail_size = isset($this->instance['thumbnail']) ? $this->instance['thumbnail'] : 'thumbnail';
 		foreach ($query as $post) {
 			array_push($result, array(
 				'link' => get_permalink($post),
 				'title' => get_the_title($post),
-				'image_link' => (has_post_thumbnail($post->ID) ? get_the_post_thumbnail_url($post->ID, 'thumbnail') : ''),
+				'image_link' => (has_post_thumbnail($post->ID) ? get_the_post_thumbnail_url($post->ID, $thumbnail_size) : ''),
 				'description' => $this->get_configurable_excerpt(
 					$post,
 					array(
@@ -97,6 +98,6 @@ class Popular_Posts_Frontend {
 		if( isset($text_append) ) {
 			$text .= $text_append;
 		}
-		return ( $rg->autop && $text ) ? "<p>$text</p>" : $text;
+		return ( $rg->autop && $text ) ? "$text" : $text;
 	}
 }

@@ -30,7 +30,7 @@ define( 'POPULAR_SLUG', 'popular-posts' );
 define( 'POPULAR_DIR', plugin_dir_path(__FILE__) );
 define( 'POPULAR_URL', plugin_dir_url(__FILE__) );
 require_once POPULAR_DIR . 'lib/ajax-loading-posts.php';
-require_once POPULAR_DIR . 'lib/register-popular-js.php';
+require_once POPULAR_DIR . 'lib/register-popular-js-css.php';
 require_once POPULAR_DIR . 'lib/dropdown-categories-multiple.php';
 require_once POPULAR_DIR . 'lib/class-popular-post-widget.php';
 new Popular_Post_Widget();

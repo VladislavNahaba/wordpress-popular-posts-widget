@@ -79,6 +79,11 @@ class Popular_Posts_Init {
 			'type' => 'template',
 			'title' => 'Шаблон',
 			'default' => ''
+		),
+		'thumbnail' => array(
+			'type' => 'thumbnail',
+			'title' => 'Изображение',
+			'default' => 'thumbnail'
 		)
 	);
 

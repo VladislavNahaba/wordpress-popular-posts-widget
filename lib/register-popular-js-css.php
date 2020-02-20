@@ -1,5 +1,5 @@
 <?php
-if (is_admin()) {
+if ( is_admin() ) {
 	add_action( 'admin_enqueue_scripts', function() {
 		wp_enqueue_script(
 			'popular_select2',
@@ -16,4 +16,9 @@ if (is_admin()) {
 			true
 		);
 	});
+} else {
+	add_action( 'wp_enqueue_scripts', 'popular_posts_style' );
+	function popular_posts_style() {
+		wp_enqueue_style( POPULAR_SLUG . '-style', POPULAR_URL . 'css/style.css' );
+	}
 }
