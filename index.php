@@ -29,7 +29,7 @@ define( 'POPLAR_VERSION', '1.0' );
 define( 'POPULAR_SLUG', 'popular-posts' );
 define( 'POPULAR_DIR', plugin_dir_path(__FILE__) );
 define( 'POPULAR_URL', plugin_dir_url(__FILE__) );
-
+require_once  __DIR__ . '/lib/dropdown_categories_multiple.php';
 require_once __DIR__ . '/lib/popularPostsWidget.php';
 new popularPostsWidget();
 
