@@ -8,9 +8,6 @@ class Popular_Posts_Frontend {
 
 	public function get_title() {
 		$title = apply_filters( 'widget_title', $this->instance['title'] );
-		if ( ! empty( $title ) && strlen($title) > $this->instance['title_max_length'] ) {
-			$title = mb_substr($title, 0, $this->instance['title_max_length']);
-		}
 		return $title;
 	}
 
