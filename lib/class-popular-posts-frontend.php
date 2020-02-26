@@ -28,13 +28,9 @@ class Popular_Posts_Frontend {
 		);
 	}
 
-	private function get_query() {
-		$query = new WP_Query();
-		return $query->query($this->get_arguments());
-	}
-
 	public function get_template_data() {
-		$query = $this->get_query();
+		$query_obj = new WP_Query();
+		$query = $query_obj->query($this->get_arguments());
 		$result = [];
 		$thumbnail_size = isset($this->instance['thumbnail']) ? $this->instance['thumbnail'] : 'thumbnail';
 		foreach ($query as $post) {
