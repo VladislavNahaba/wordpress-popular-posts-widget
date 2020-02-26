@@ -3,7 +3,7 @@ if( is_admin() ) {
 	add_action( 'wp_ajax_popular_posts_widget', function () {
 		global $wpdb;
 		$ajax_data = $_GET['term'];
-		$res       = $wpdb->get_results( "SELECT `ID`, `post_title` FROM `{$wpdb->prefix}posts` WHERE `post_title` LIKE '{$ajax_data}%'", OBJECT );
+		$res       = $wpdb->get_results( "SELECT `ID`, `post_title` FROM `{$wpdb->prefix}posts` AS `p` WHERE  `p`.`post_status` = \"publish\" AND `post_title` LIKE '{$ajax_data}%'", OBJECT );
 		$result    = array(
 			'results' => array()
 		);
