@@ -5,27 +5,27 @@ require_once 'class-popular-posts-init.php';
 require_once 'class-popular-posts-frontend.php';
 
 class Popular_Post_Widget extends Popular_Posts_Components {
-    private $options_handler;
     private $opts;
 
 	public function __construct() {
 		parent::__construct(
 			'popular_posts_widget',
 			__('Popular Posts Widget'),
-			array( 'description' => 'Allow to show the most popular posts.' )
+			array('description' => 'Allow to show the most popular posts.')
 		);
-		$this->options_handler = new Popular_Posts_Init();
-		$this->opts = $this->options_handler->get_options_params();
+		$init = new Popular_Posts_Init();
+		$this->opts = $init->get_options_params();
 	}
 
-	public function widget( $args, $instance ) {
-	    $frontend_handler = new Popular_Posts_Frontend($instance);
-		$title = $frontend_handler->get_title();
+	public function widget($args, $instance) {
+//	    $frontend_handler = new Popular_Posts_Frontend($instance);
+		$title = apply_filters('widget_title', $instance['title']);
 		echo $args['before_widget'];
-		if ( ! empty( $title ) ) {
+		if (!empty($title)) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-		$template_data = $frontend_handler->get_template_data();
+		$template = $this->get_template_data($instance);
+//		$template_data = $frontend_handler->get_template_data();
 		ob_start();
         require POPULAR_DIR . 'templates/' . $instance['template'];
 		$form = ob_get_contents();
@@ -35,12 +35,12 @@ class Popular_Post_Widget extends Popular_Posts_Components {
 		echo $args['after_widget'];
 	}
 
-	public function form( $instance ) {
+	public function form($instance) {
 		echo '<div class="widget-popular-posts">';
 		foreach ( $this->opts as $id => $opt ) {
-			$opt_value = isset( $instance[ $id ] ) ? $instance[ $id ] : $opt['default'];
-			$opt_id = $this->get_field_id( $id );
-			$opt_name = $this->get_field_name( $id );
+			$opt_value = isset($instance[ $id ]) ? $instance[ $id ] : $opt['default'];
+			$opt_id = $this->get_field_id($id);
+			$opt_name = $this->get_field_name($id);
 			$opt_title = $opt['title'];
 			$opt_type = $opt['type'];
 			switch ( $opt_type ) {
@@ -79,19 +79,19 @@ class Popular_Post_Widget extends Popular_Posts_Components {
 		echo '</div>';
 	}
 
-	public function update( $new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance) {
 		$instance = array();
-		foreach ( $this->opts as $id => $opt ) {
+		foreach ($this->opts as $id => $opt) {
 			$opt_type = $opt['type'];
-			switch ( $opt_type ) {
+			switch ($opt_type) {
                 case 'text':
-	                $instance[$id] = ( ! empty( $new_instance[$id] ) ) ? strip_tags( $new_instance[$id] ) : '';
+	                $instance[$id] = (!empty( $new_instance[$id])) ? strip_tags($new_instance[$id]) : '';
 	                break;
                 case 'number' :
-	                $instance[$id] = ( is_numeric( $new_instance[$id] ) ) ? $new_instance[$id] : '0';
+	                $instance[$id] = is_numeric( $new_instance[$id]) ? $new_instance[$id] : '0';
 	                break;
                 case 'checkbox':
-	                $instance[$id] = ( ! empty( $new_instance[$id] ) ) ? $new_instance[$id] : '';
+	                $instance[$id] = (!empty( $new_instance[$id])) ? $new_instance[$id] : '';
 	                break;
                 case 'select':
 				case 'template':
@@ -107,5 +107,24 @@ class Popular_Post_Widget extends Popular_Posts_Components {
             }
 		}
 		return $instance;
+	}
+
+	private function get_template_data($instance) {
+		$query_obj = new WP_Query();
+		return $query_obj->query($this->get_query_arguments($instance));
+	}
+
+	private function get_query_arguments($instance) {
+		return array(
+			'post_type' => $instance['entity_type'],
+			'posts_per_page' => $instance['amount'],
+			'orderby' => $instance['sort'],
+			'order' => $instance['sort_order'],
+			'post__not_in' => isset($instance['exclude_post']) ? $instance['exclude_post'] : array(),
+			'cat' => isset($instance['include_categories']) ? $instance['include_categories'] : array(),
+			'category__not_in' => isset($instance['exclude_categories']) ? $instance['exclude_categories'] : array(),
+			'tag__not_in' => isset($instance['include_tags']) ? $instance['include_tags'] : array(),
+			'author__in' => isset($instance['include_authors']) ? $instance['include_authors'] : array(),
+		);
 	}
 }
